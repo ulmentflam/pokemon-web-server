@@ -1,0 +1,27 @@
+version: '2'
+services:
+  app:
+    restart: always
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_URL: "postgresql+psycopg2://tracks:tracks_password@postgres:5432/tracks"
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: supertestingbacon
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    links:
+      - postgres
+    command:
+      uwsgi --http 0.0.0.0:8000 --wsgi-file application.py --callable __hug_wsgi__
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: supertestingbacon
+      POSTGRES_DB: test

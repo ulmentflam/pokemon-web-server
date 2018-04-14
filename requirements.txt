@@ -1,0 +1,7 @@
+arrow
+environs
+falcon
+hug
+orator
+psycopg2
+uwsgi
